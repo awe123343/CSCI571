@@ -1,0 +1,482 @@
+<!DOCTYPE html>
+<html lang="en" xml:lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link type="text/css" rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.9/js/all.js" integrity="sha384-8iPTk2s/jMVj81dnzb/iFR2sdA7u06vHJyyLlAd4snFpCl/SnyUjRrbdJsw1pGIl" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/rateYo/2.3.2/jquery.rateyo.min.js"></script>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-animate.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular-messages.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.0/moment.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/angular-moment@1.2.0/angular-moment.min.js"></script>
+    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDyuqEgrCkrgQ_NrIondRZCc-ei8qtIkqw&libraries=places&callback=initAutocomplete" async defer></script>
+    <script type="text/javascript" async="" src="https://platform.twitter.com/widgets.js"></script>
+    <script src="HW8.js"></script>
+    <link href="HW8.css" rel="stylesheet"/>
+
+    <title>Travel and Entertainment Search</title>
+</head>
+
+<body>
+    <div ng-app = "myApp" ng-cloak ng-controller="myCtrl" data-ng-init="load()" style="margin-bottom: 3%">
+        <div class="container">
+            <form id="myForm" name="myForm" ng-controller="validateCtrl" ng-submit="formSubmit();$event.preventDefault();$event.stopPropagation()"  novalidate role="main">
+                <div class="row">
+                    <div class="col-md-12 header">
+                        <h4><label>Travel and Entertainment Search</label></h4>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 offset-md-2 col-form-label" for="keyword">
+                        Keyword<span class="requiredField">*</span>
+                    </label>
+                    <div class="col-md-6">
+                        <input class="form-control" id="keyword" name="keyword" ng-model="keyword" type="text" required onkeydown="if(event.keyCode==13)return false;" />
+                        <span style="color:red" ng-show="myForm.keyword.$touched && myForm.keyword.$invalid">
+                            Please enter a keyword!
+                        </span>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 offset-md-2 col-form-label" for="category">Category</label>
+                    <div class="col-md-4">
+                    <select class="form-control" id="category" name="category" ng-model="category">
+                        <option value="default">Default</option>
+                        <option value="airport">Airport</option>
+                        <option value="amusement_park">Amusement Park</option>
+                        <option value="aquarium">Aquarium</option>
+                        <option value="art_gallery">Art Gallery</option>
+                        <option value="bakery">Bakery</option>
+                        <option value="bar">Bar</option>
+                        <option value="beauty_salon">Beauty Salon</option>
+                        <option value="bowling_alley">Bowling Alley</option>
+                        <option value="bus_station">Bus Station</option>
+                        <option value="cafe">Cafe</option>
+                        <option value="campground">Campground</option>
+                        <option value="car_rental">Car Rental</option>            
+                        <option value="casino">Casino</option>
+                        <option value="lodging">Lodging</option>
+                        <option value="movie_theater">Movie Theater</option>
+                        <option value="museum">Museum</option>
+                        <option value="night_club">Night Club</option>
+                        <option value="park">Park</option>
+                        <option value="parking">Parking</option>
+                        <option value="restaurant">Restaurant</option>
+                        <option value="shopping_mall">Shopping Mall</option>
+                        <option value="stadium">Stadium</option>
+                        <option value="subway_station">Subway Station</option>
+                        <option value="taxi_stand">Taxi Stand</option>
+                        <option value="train_station">Train Station</option>
+                        <option value="transit_station">Transit Station</option>
+                        <option value="travel_agency">Travel Agency</option>
+                        <option value="zoo">Zoo</option>
+                    </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-md-2 offset-md-2 col-form-label" for="distance">Distance (miles)</label>
+                    <div class="col-md-4">
+                    <input class="form-control" id="distance" name="distance" placeholder="10" type="number" ng-model="distance" ng-init="distance=10" onkeydown="if(event.keyCode==13)return false;">
+                    </div>
+                </div>
+                <div class="form-group row" ng-init="isChecked='true'">
+                    <legend class="col-md-2 offset-md-2 col-form-label" for="location">From<span class="requiredField">*</span></legend>
+                    <div class="col-md-6">
+                        <div class="form-check">
+                            <input class="form-check-input" id="location1" name="location" type="radio" ng-model="isChecked" value="true">
+                            <label class="form-check-label">Current location</label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" id="location2" name="location" type="radio" ng-model="isChecked" value="false">
+                            <label class="form-check-label" for="location2">Other. Please specify:</label>
+                            <input class="form-control" id="inputLoc" name="inputLoc" ng-model="inputLoc" type="text" ng-disabled="isChecked=='true'" ng-required="isChecked=='false'" placeholder="Enter a location" onkeydown="if(event.keyCode==13)return false;">
+                            <span style="color:red" ng-show="myForm.inputLoc.$touched && myForm.inputLoc.$invalid">
+                                Please specify the location!
+                            </span>
+                            <input type="text" name="currentAxis" ng-model="currentAxis" style="display: none;" required/>
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-12 offset-md-2">        
+                        <button class="btn btn-primary" id="submit" ng-disabled="myForm.$invalid"><i class="fas fa-search"></i> Search</button>
+                        <button class="btn clear-btn" id="clear" type="button" ng-click="clear(myForm);">Clear</button>          
+                    </div>
+                                        
+                </div>
+            </form>
+        </div>
+
+        <div class="container" id="result">
+            <div class="container-fluid" id="switchTab">
+                <ul class="nav nav-pills justify-content-center" role="tablist">
+                    <li class="nav-item" role="presentation"><a class="nav-link active" ng-click="showResult();" id="searchTab" data-toggle="tab" href="#resultcontent" role="tab" aria-controls="resultcontent" aria-selected="true">Results</a></li>
+                    <li class="nav-item" role="presentation"><a class="nav-link" ng-click="showFavorite();" id="favoritesTab" data-toggle="tab" href="#favorites" role="tab" aria-controls="favorites" aria-selected="false">Favorites</a></li>
+                </ul>
+                <div id="pics" style="display: none;"></div>
+            </div>
+
+            <div class="tab-content" id="pills-tabContent">
+                <div id="resultcontent"  ng-hide="hideList" class="tab-pane fade show active" aria-labelledby="searchTab">
+                    <div ng-if="nearbyrst.status=='OK'">
+                        <div class="form-group row d-flex justify-content-end">        
+                            <button class="btn btn-outline-dark" id="details" ng-disabled="dofplace.status!='OK'" ng-click="displayDetail();">Details <i class="fas fa-angle-right"></i></button>              
+                        </div>
+                        <div class="table-responsive">    
+                            <table class="table table-hover scrollable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Catrgory</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Favorite</th>
+                                        <th scope="col">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="place in nearbyrst.results" class="{{place.place_id}}">
+                                        <td><b>{{$index + 1}}</b></td>
+                                        <td><img height="36" width="36" ng-src={{place.icon}}></td>
+                                        <td>{{place.name}}</td>
+                                        <td>{{place.vicinity}}</td>
+                                        <td>                
+                                            <button class="btn btn-outline-dark" ng-click="saveFavorite(place.place_id, place.icon, place.name, place.vicinity)" ng-if="!checkFavorite(place.place_id)"><i class="far fa-star"></i></button>
+                                            <button class="btn btn-outline-dark" ng-click="removeFavorite(place.place_id)" ng-if="checkFavorite(place.place_id)"><i class="fas fa-star" style="color:#FED530;"></i></button>
+                                        </td>
+
+                                        <td><button class="btn btn-outline-dark" id="detail{{$index+1}}" ng-click="showDetail(place.place_id)"><i class="fas fa-angle-right"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <!--Pagination buttons-->
+                        <div class="form-group row d-flex justify-content-center" id="btn_page">
+                            <!--Hiden tags for parsing URL and next_page_token-->
+                            <input type="text" name="requrl" ng-model="requrl" style="display: none;"/>
+                            <input type="text" name="pagetoken" ng-model="pagetoken" style="display: none;"/>    
+        
+                            <button class="btn btn-outline-dark" id="previous" ng-click="getPrev();" ng-if="previous.length > 1">Previous</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-outline-dark" id="next" ng-click="getNextpage();" ng-if="nearbyrst.next_page_token">  Next  </button>
+                                
+                        </div>
+                    </div>
+                    <div ng-if=error>
+                        <div class="alert alert-danger" role="alert">Failed to get search results.</div>
+                    </div>
+                    
+                    <div class="progress" ng-if="showProgressbar">
+                        <div class="progress-bar progress-bar-striped progress-bar-animated"  role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+                    </div>
+        
+                    <div ng-if="nearbyrst.status=='ZERO_RESULTS' || nearbyrst.status=='INVALID_REQUEST'">
+                        <div class="alert alert-warning" role="alert">No records.</div>
+                    </div>
+                </div>
+
+                <div id="favorites"  ng-hide="hideList || hideF" class="tab-pane fade" aria-labelledby="favoritesTab">
+                    <div ng-if="favoriteDatas !== undefined && favoriteDatas !== null && favoriteDatas.length !== 0">
+                        <div class="form-group row d-flex justify-content-end">        
+                            <button class="btn btn-outline-dark" id="details" ng-disabled="dofplace.status!='OK'" ng-click="displayDetail();">Details <i class="fas fa-angle-right"></i></button>              
+                        </div>
+                        <div class="table-responsive">    
+                            <table class="table table-hover scrollable">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Catrgory</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Address</th>
+                                        <th scope="col">Favorite</th>
+                                        <th scope="col">Details</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-repeat="place in favoriteDatas" class="{{place[0]}}">
+                                        <td><b>{{$index + 1}}</b></td>
+                                        <td><img height="36" width="36" ng-src={{place[1]}}></td>
+                                        <td>{{place[2]}}</td>
+                                        <td>{{place[3]}}</td>
+                                        <td>
+                                            <button class="btn btn-outline-dark" ng-click="removeFavorite(place[0])" ng-show="checkFavorite(place[0])"><i class="fas fa-trash-alt"></i></button>
+                                        </td>
+
+                                        <td><button class="btn btn-outline-dark" id="detail{{$index+1}}" ng-click="showDetail(place[0])"><i class="fas fa-angle-right"></i></button></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- <div class="form-group row d-flex justify-content-center" id="btn_page">
+                            
+                            <input type="text" name="requrl" ng-model="requrl" style="display: none;"/>
+                            <input type="text" name="pagetoken" ng-model="pagetoken" style="display: none;"/>    
+                        
+                            <button class="btn btn-outline-dark" id="previous" ng-click="getPrev();" ng-if="previous.length > 1">Previous</button>
+                            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-outline-dark" id="next" ng-click="getNextpage();" ng-if="nearbyrst.next_page_token">  Next  </button>    
+                        </div>  -->
+                    </div>
+
+                    <div ng-if="favoriteDatas === undefined || favoriteDatas === null || favoriteDatas.length === 0">
+                        <div class="alert alert-warning" role="alert">No records.</div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div id="details" ng-hide="hideDetails">
+                <div ng-if="dofplace.status=='OK'">
+                    <br />
+                    <div class="col-md-12 placetitle">
+                        <h4>{{dofplace.result.name}}</h4>
+                    </div>
+                    <div class="form-group row d-flex justify-content-between" id="btn_detail">
+                        <button class="btn btn-outline-dark" id="backlist" ng-click="displayList();"><i class="fas fa-angle-left"></i> List</button>
+                         <span>
+                        <button class="btn btn-outline-dark" ng-click="saveFavorite(dofplace.result.place_id, dofplace.result.icon, dofplace.result.name, dofplace.result.vicinity)" ng-if="!checkFavorite(dofplace.result.place_id)"><i class="far fa-star"></i></button>
+                        <button class="btn btn-outline-dark" ng-click="removeFavorite(dofplace.result.place_id)" ng-if="checkFavorite(dofplace.result.place_id)"><i class="fas fa-star" style="color:#FED530;"></i></button>
+                        
+                        <a class="twitter" id="twitter"><img width="38" height="38" src="http://cs-server.usc.edu:45678/hw/hw8/images/Twitter.png" /></a>
+                        </span>
+                    </div>
+                    <div id="tabs">
+                        <ul class="nav nav-tabs d-flex justify-content-end">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#info">Info</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#photos">Photos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#map">Map</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#reviews">Reviews</a>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-content">
+                        <div class="tab-pane container active" id="info">
+                            <table class="table table-striped">
+                                <thead>
+                                    <tr>
+                                        <th style="border-top:0;"></th>
+                                        <th style="border-top:0;"></th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr ng-if="dofplace.result.formatted_address">
+                                        <th>Address</th>
+                                        <td>{{dofplace.result.formatted_address}}</td>
+                                    </tr>
+                                    <tr ng-if="dofplace.result.international_phone_number">
+                                        <th>Phone Number</th>
+                                        <td>{{dofplace.result.international_phone_number}}</td>
+                                    </tr>
+                                    <tr ng-if="dofplace.result.price_level">
+                                        <th>Price Level</th>
+                                        <td>{{dofplace.result.price_level}}</td>
+                                    </tr>
+                                    <tr ng-if="dofplace.result.rating">                                    
+                                        <th>Rating</th>
+                                        <td id="ratings">{{dofplace.result.rating}}
+                                            <div class="star-ratings-sprite"><span ng-style="{'width': star + '%'}" class="star-ratings-sprite-rating"></span></div>
+                                        </td>
+                                    </tr>
+                                    <tr ng-if="dofplace.result.url">
+                                        <th>Google Page</th>
+                                        <td><a href="{{dofplace.result.url}}" target="_blank">{{dofplace.result.url}}</a></td>
+                                    </tr>
+                                    <tr ng-if="dofplace.result.website">
+                                        <th>Website</th>
+                                        <td><a href="{{dofplace.result.website}}" target="_blank">{{dofplace.result.website}}</a></td>
+                                    </tr>
+                                    <tr ng-if="dofplace.result.opening_hours">
+                                        <th>Hours</th>
+                                        <td id="hours"><span id="detailPopupButton" data-toggle="modal" data-target="#myModal">Daily open hours</span></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+
+                            <div class="modal fade" id="myModal">
+                                <div id="popupWindow" class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title">Open Hours</h5>
+                                            <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                        </div>
+                                    <div class="modal-body">
+                                        <ul id="detailPopupList" class="list-group list-group-flush"></ul>
+                                    </div>
+                                    <div class="modal-footer">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="tab-pane container" id="photos">
+                            <div class="container">
+                                <div ng-if="photourls.length==0" style="margin-top:15px;">
+                                    <div class="alert alert-warning" role="alert">No records.</div>
+                                </div>
+                                <div class="row">
+                                    <div class="card-columns" ng-if=photourl.length!=0>
+                                        <div class="card" ng-repeat="photo_url in photourls">
+                                            <a href="{{photo_url}}" target="_blank"><img class="card-img img-thumbnail" ng-src={{photo_url}}></a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="tab-pane container" id="map">
+                            <form name="mapForm" ng-submit="displayRoute();$event.preventDefault();$event.stopPropagation()">
+                                <div class="form-row">
+                                    <div class="form-group col-md-4 p-2">
+                                        <label for="inputFrom"><b>From</b></label>
+                                        <input class="form-control" id="inputFrom" name="inputFrom" ng-model="inputFrom" ng-focus="autocompleteMap();" type="text" placeholder="Enter a location" autocomplete="off" required />
+                                    </div>
+                                    <div class="form-group col-md-4 p-2">
+                                        <label for="inputTo"><b>To</b></label>
+                                        <input class="form-control" id="inputTo" name="inputTo" ng-model="inputTo" readonly="" type="text">
+                                    </div>
+                                    <div class="form-group col-md-2 p-2">
+                                        <label for="travelMode"><b>Travel Mode</b></label>
+                                        <select class="form-control" ng-model="travelMode" id="travelMode" name="category">
+                                            <option value="DRIVING">Driving</option>
+                                            <option value="BICYCLING">Bicycling</option>
+                                            <option value="TRANSIT">Transit</option>
+                                            <option value="WALKING">Walking</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group col-md-2 p-2 align-self-end">
+                                        <button class="btn btn-primary" id="get-direct" type="submit" ng-disabled=mapForm.$invalid>Get Directions</button>
+                                    </div>
+                                </div>
+                            </form>
+                            <div style="height: 40px; width: 40px; margin-bottom: 10px;" ng-if=showMap>
+                                <a href="javascript:void(0)" ng-click="toggleStreetView(1.0*dofplace.result.geometry.location.lat, 1.0*dofplace.result.geometry.location.lng)"><img class="img-thumbnail" src="http://cs-server.usc.edu:45678/hw/hw8/images/Pegman.png" style="height: 100%; width: 100%;"></a>
+                            </div>
+                            <div style="height: 40px; width: 40px; margin-bottom: 10px;" ng-if=showStreet>
+                                <a href="javascript:void(0)" ng-click="createMap(1.0*dofplace.result.geometry.location.lat, 1.0*dofplace.result.geometry.location.lng)"><img class="img-thumbnail" src="http://cs-server.usc.edu:45678/hw/hw8/images/Map.png" style="height: 100%; width: 100%;"></a>
+                            </div>
+
+                            <div id="detailmap"></div>
+                            <div id="detailmap-panel"></div>
+
+                        </div>
+
+                        <div class="tab-pane container" id="reviews" style="margin-top:1%">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{company}}</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <a class="dropdown-item" ng-click="onChangeReview('Google Reviews')">Google Reviews</a>
+                                            <a class="dropdown-item" ng-click="onChangeReview('Yelp Reviews')">Yelp Reviews</a>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="margin-left: 2%;" class="dropdown">
+                                        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{order}}</button>
+                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton2">
+                                            <a class="dropdown-item" ng-click="onChangeOrder('Default Order')">Default Order</a>
+                                            <a class="dropdown-item" ng-click="onChangeOrder('Highest Rating')">Highest Rating</a>
+                                            <a class="dropdown-item" ng-click="onChangeOrder('Lowest Rating')">Lowest Rating</a>
+                                            <a class="dropdown-item" ng-click="onChangeOrder('Most Recent')">Most Recent</a>
+                                            <a class="dropdown-item" ng-click="onChangeOrder('Least Recent')">Least Recent</a>
+                                      </div>
+                                    </div>
+                                </div>
+
+                                <div class="row">
+                                    <div style="width: 100%;">
+                                        <div ng-if="company === 'Google Reviews'" class="fade">
+                                            <div ng-if="googleReviews === null || googleReviews === undefined">
+                                                <div class="alert alert-warning" role="alert" style="margin-top: 10px;">No records.</div>
+                                            </div>
+                                            <div ng-repeat="review in googleReviews;" class="roundCorner">
+                                                <div style="position: absolute;">
+                                                    <div style=" width: 48px; height: 48px">
+                                                        <a target="_blank" ng-href={{review.author_url}}><img style="width: 100%; height: 100%" ng-src={{review.profile_photo_url}}></a>
+                                                    </div>
+                                                </div>
+                                                <div style="margin-left: 64px;">
+                                                    <div style="position: relative;">
+                                                        <div>
+                                                            <a ng-href={{review.author_url}} target="_blank"><span>{{review.author_name}}</span></a>
+                                                            <div>
+                                                                <span class="star" ng-if="review.rating == 1">★</span>
+                                                                <span class="star" ng-if="review.rating == 2">★★</span>
+                                                                <span class="star" ng-if="review.rating == 3">★★★</span>
+                                                                <span class="star" ng-if="review.rating == 4">★★★★</span>
+                                                                <span class="star" ng-if="review.rating == 5">★★★★★</span>
+                                                                <span class="reviewDate">{{review.time * 1000 | date:'y-MM-dd HH:mm:ss'}}</span>
+                                                            </div>
+                                                            <div>{{review.text}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                
+                                    <div style="width: 100%;">
+                                        <div ng-if="company === 'Yelp Reviews'" class="fade">
+                                            <div ng-if="yelpReviews === null || yelpReviews === undefined">
+                                                <div class="alert alert-warning" role="alert" style="margin-top: 10px;">No records.</div>
+                                            </div>
+                                        
+                                            <div ng-repeat="review in yelpReviews;" class="roundCorner">
+                                                <div style="position: absolute;">
+                                                    <div style=" width: 48px; height: 48px">
+                                                        <a target="_blank" ng-href={{review.url}}><img style="width: 100%; height: 100%; border-radius: 50%;" ng-src={{review.user.image_url}}></a>
+                                                    </div>
+                                                </div>
+                                                <div style="margin-left: 64px;">
+                                                    <div style="position: relative;">
+                                                        <div><a ng-href={{review.url}} target="_blank"><span>{{review.user.name}}</span></a><div>
+                                                            <span class="star" ng-if="review.rating == 1">★</span>
+                                                            <span class="star" ng-if="review.rating == 2">★★</span>
+                                                            <span class="star" ng-if="review.rating == 3">★★★</span>
+                                                            <span class="star" ng-if="review.rating == 4">★★★★</span>
+                                                            <span class="star" ng-if="review.rating == 5">★★★★★</span>
+                                                            <span class="reviewDate">{{review.time_created}}</span></div>
+                                                            <div>{{review.text}}</div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress" ng-if="showProgressbar">
+                    <div class="progress-bar progress-bar-striped progress-bar-animated"  role="progressbar" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100" style="width: 50%"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+
+</html>

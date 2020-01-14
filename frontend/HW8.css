@@ -1,0 +1,189 @@
+.header {
+    text-align: center;
+}
+body {
+    width: 100%;
+    display: block;
+    overflow-x: hidden;
+}
+
+#myForm {
+    margin-top: 10px;
+    border: 1px solid #ccc;
+    padding: 20px;
+    background-color: #f8f8f8;
+    border-radius: 10px;
+}
+
+.btn.clear-btn {
+    border: 1px solid #ccc;
+    background-color: #fff;
+}
+
+.requiredField {
+    color: red;
+}
+
+input.ng-invalid.ng-touched {
+    border: 1px solid red;
+}
+
+#switchTab {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.btn.clear-btn:hover {
+    background-color:#e6e6e6;
+}
+
+.progress {
+    margin-top:10%;
+}
+
+.table > tbody > tr > td {
+    vertical-align: middle;
+}
+
+.scrollable {
+    overflow-x: auto;
+}
+
+.highlight {
+    background-color: rgb(245, 218, 152);
+}
+
+.placetitle {
+    text-align: center;
+}
+
+#rateYo {
+    display: inline-block;
+    vertical-align: middle;
+}
+
+#info {
+    vertical-align: middle;
+}
+
+.star-ratings-sprite {
+  background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+  font-size: 0;
+  height: 21px;
+  line-height: 0;
+  overflow: hidden;
+  text-indent: -999em;
+  width: 110px;
+  margin: 0 auto;
+  display: inline-block;
+  vertical-align: middle;
+}
+
+.star-ratings-sprite-rating {
+    background: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/2605/star-rating-sprite.png") repeat-x;
+    background-position: 0 100%;
+    float: left;
+    height: 21px;
+    display:block;
+}
+
+#detailPopupButton {
+    text-decoration: underline;
+    color: #007bff;
+}
+
+#detailPopupButton:hover {
+    color: rgb(28, 95, 182);
+    cursor: pointer;
+}
+
+.card-columns {
+    margin-top: 15px;
+}
+
+.card-columns .card {
+    width: 100%;
+    display: block;
+}
+
+@media screen and (-webkit-min-device-pixel-ratio:0)
+{ 
+    .card-columns .card {
+        float: left;
+    }
+}
+
+#detailmap {
+    height: 400px;
+    width: 100%;
+}
+
+/*animation effect*/
+#details {
+    -webkit-transition:all ease 0.5s;
+    transition:all ease 0.5s;
+    -moz-transition:all ease 0.5s;
+       -o-transition:all ease 0.5s;
+       position: relative;
+       left: 0;
+}
+   
+#details.ng-hide{
+    left: 100%;
+}
+
+#resultcontent {
+    -webkit-transition:all ease 0.5s;
+    transition:all ease 0.5s;
+    -moz-transition:all ease 0.5s;
+       -o-transition:all ease 0.5s;
+       position: relative;
+       right: 0;
+}
+
+#resultcontent.ng-hide{
+    right: 100%;
+}
+
+.star {  
+    color: rgb(219, 115, 53);
+}
+
+.roundCorner {
+      border-radius: 0.25rem;
+      border: 1px solid transparent;
+      margin-top: 10px;
+      border-color: rgb(211,211,211);
+      padding: 5px;
+      width: 100%;
+}
+
+.reviewDate {
+    color: grey;
+    font-size: 0.9rem;
+}
+
+.fade {
+    opacity: 1;
+}
+
+/* The starting CSS styles for the enter animation */
+.fade.ng-enter {
+    transition:1s linear all;
+    opacity:0;
+}
+  
+/* The finishing CSS styles for the enter animation */
+.fade.ng-enter.ng-enter-active {
+    opacity:1;
+}
+
+@media (min-width:1200px){
+    .card-columns {
+        -webkit-column-count: 4;
+        -moz-column-count: 4;
+        column-count:4;
+        }
+    }
